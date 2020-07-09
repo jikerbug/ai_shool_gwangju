@@ -1,6 +1,9 @@
-# TODO_0 : csv 모듈 불러오기
+#TODO_0 : csv 모듈 불러오기
 import csv
+import os.path
 
+
+file_path = 'data.csv'
 
 def user_input():
     try:
@@ -19,7 +22,7 @@ def user_input():
 
 def id_check(id):
 
-    with open('data.csv', 'r', encoding='utf=8') as f:
+    with open(file_path, 'r', encoding='utf=8') as f:
         students_reader = csv.reader(f)
         
         next(students_reader)
@@ -33,7 +36,7 @@ def id_check(id):
 
 def password_check(password):
     
-    with open('data.csv', 'r', encoding='utf=8') as f:
+    with open(file_path, 'r', encoding='utf=8') as f:
         students_reader = csv.reader(f)
         
         # students_reader is not a list. It is an iterator. You should either convert it to a list and then slice:
@@ -53,7 +56,7 @@ def signin(id, password):
     return False            
 
 def default_csv_setting():
-    with open('data.csv', 'w', encoding='utf-8', newline='') as f:
+    with open(file_path, 'w', encoding='utf-8', newline='') as f:
 
         students_writer = csv.writer(f)
         students_writer.writerow(['id', 'password'])
@@ -81,13 +84,13 @@ def is_user_exist(id):
 # 1. 아이디와 비밀번호를 그냥 데이터로 받아서 추가해보기
 # 2. 아이디와 비밀번호를 '딕셔너리' 형태로 받아서 추가해보기 (프로그래밍 실력의 기본은 구글링! 최대한 구글링 해보세요!!)
 def signup(id,password):
-    with open('data.csv', 'a', encoding='utf-8', newline='') as f:
+    with open(file_path, 'a', encoding='utf-8', newline='') as f:
         students_writer = csv.writer(f)
         students_writer.writerow([id, password])
 
 
 def signup(dictionary):
-    with open('data.csv', 'a', encoding='utf-8', newline='') as f:
+    with open(file_path, 'a', encoding='utf-8', newline='') as f:
         w = csv.writer(f)
         w.writerow(dictionary.values())
     
@@ -96,7 +99,7 @@ def signup(dictionary):
 def userlist():
     print("현재 존재하는 유저 :")
 
-    with open('data.csv', 'r',encoding='utf-8') as f:
+    with open(file_path, 'r',encoding='utf-8') as f:
         students_reader = csv.reader(f)
         for student in list(students_reader)[1:]:
             print(student[0])
@@ -110,8 +113,13 @@ def exitcheck():
     elif stop == 1:
         exit()
 
-#default_csv_setting()
+
+
+#
 def start():
+    if not os.path.isfile(file_path):
+        default_csv_setting()
+
     print('csv 로 데이터 다루기 로그인 예제')
 
     
